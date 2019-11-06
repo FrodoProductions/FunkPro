@@ -14,6 +14,7 @@ sumOfTeiler 0 a b = 0
 sumOfTeiler n a b | n `mod` a == 0 || n `mod` b == 0 = n + sumOfTeiler (n-1) a b
                   | otherwise = sumOfTeiler (n-1) a b
 
+
 -- AUFGABE 3
 
 -- Definition einer Hilfsfunktion factorial,
@@ -25,3 +26,21 @@ factorial n = n * factorial (n-1)
 euler :: Double -> Double
 euler 0 = 1
 euler n = 1 / (factorial n) + euler (n-1)
+
+
+-- AUFGABE 5
+
+-- Da trueDivisor immer eine Referenz auf seinen Anfangspunkt (das ursprüngliche n)
+-- behalten muss und ich keine Möglichkeit gefunden habe, wie dies mit einer
+-- rekursiven Funktion mit nur einem Argument möglich sein könnte, habe ich
+-- die eigentliche Funktionalität in die zweiargumentige Funktion recursiveDiv
+-- geschrieben, in der das eine Argument n zum zählen verwendet und das andere
+-- nicht verändert wird und daher in der Rekursion seinen Originalwert behält.
+
+trueDivisor :: Int -> [Int]
+trueDivisor n = reverse (recursiveDiv n n)
+
+recursiveDiv :: Int -> Int -> [Int]
+recursiveDiv 0 a = []
+recursiveDiv n a | a `mod` n == 0 && n /= a = n : (recursiveDiv (n-1) a)
+                 | otherwise = (recursiveDiv (n-1) a)
