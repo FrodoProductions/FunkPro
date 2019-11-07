@@ -44,3 +44,34 @@ recursiveDiv :: Int -> Int -> [Int]
 recursiveDiv 0 a = []
 recursiveDiv n a | a `mod` n == 0 && n /= a = n : (recursiveDiv (n-1) a)
                  | otherwise = (recursiveDiv (n-1) a)
+
+
+-- AUFGABE 6
+
+true :: Int
+true = 1
+
+false :: Int
+false = 0
+
+negation :: Int -> Int
+negation 0 = 1
+negation 1 = 0
+
+und :: Int -> Int -> Int
+und b c | b + c > 1 = 1
+        | otherwise = 0
+
+oder :: Int -> Int -> Int
+oder b c | b + c > 0 = 1
+        | otherwise = 0
+
+exoder :: Int -> Int -> Int
+exoder b c | b + c == 1 = 1
+           | otherwise = 0
+
+hamming_distance :: [Int] -> [Int] -> Int
+hamming_distance [] [] = 0
+hamming_distance as bs | length as /= length bs = error "The two numbers have to have the same length!"
+                       | exoder (head as) (head bs) == 1 = 1 + hamming_distance (drop 1 as) (drop 1 bs)
+                       | otherwise = hamming_distance (drop 1 as) (drop 1 bs)
