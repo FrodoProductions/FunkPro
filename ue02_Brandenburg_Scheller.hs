@@ -56,17 +56,15 @@ false = 0
 
 negation :: Int -> Int
 negation x = -(x-1)
+
 und :: Int -> Int -> Int
-und b c | b + c > 1 = 1
-        | otherwise = 0
+und b c = b*c
 
 oder :: Int -> Int -> Int
-oder b c | b + c > 0 = 1
-        | otherwise = 0
+oder b c = b + c - b * c
 
 exoder :: Int -> Int -> Int
-exoder b c | b + c == 1 = 1
-           | otherwise = 0
+exoder b c = -(b-c)
 
 -- Diese Funktion überprüft immer das erste Element beider Listen mithilfe der exoder-Funktion.
 -- Wenn exoder == 1 gilt, die Elemente also unterschiedlich sind, addiert die Funktion
