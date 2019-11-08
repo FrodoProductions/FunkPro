@@ -64,7 +64,7 @@ oder :: Int -> Int -> Int
 oder b c = b + c - b * c
 
 exoder :: Int -> Int -> Int
-exoder b c = -(b-c)
+exoder b c = b + c - 2 * b * c
 
 -- Diese Funktion überprüft immer das erste Element beider Listen mithilfe der exoder-Funktion.
 -- Wenn exoder == 1 gilt, die Elemente also unterschiedlich sind, addiert die Funktion
