@@ -27,6 +27,13 @@ euler :: Double -> Double
 euler 0 = 1
 euler n = 1 / (factorial n) + euler (n-1)
 
+-- AUFGABE 4
+
+insertInPos :: a -> Int -> [a] -> [a]
+insertInPos e pos [] = []
+insertInPos e 0 (b:bs) = e : insertInPos e (-1) (b:bs)
+insertInPos e pos (b:bs) = b : insertInPos e (pos-1) bs
+
 
 -- AUFGABE 5
 
@@ -74,6 +81,6 @@ exoder b c = b + c - 2 * b * c
 
 hamming_distance :: [Int] -> [Int] -> Int
 hamming_distance [] [] = 0
-hamming_distance as bs | length as /= length bs = error "The two numbers have to have the same length!"
-                       | exoder (head as) (head bs) == 1 = 1 + hamming_distance (drop 1 as) (drop 1 bs)
-                       | otherwise = hamming_distance (drop 1 as) (drop 1 bs)
+hamming_distance (a:as) (b:bs) | length (a:as) /= length (b:bs) = error "The two numbers have to have the same length!"
+                               | exoder a b == 1 = 1 + hamming_distance as bs
+                               | otherwise = hamming_distance as bs
