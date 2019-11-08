@@ -55,9 +55,7 @@ false :: Int
 false = 0
 
 negation :: Int -> Int
-negation 0 = 1
-negation 1 = 0
-
+negation x = -(x-1)
 und :: Int -> Int -> Int
 und b c | b + c > 1 = 1
         | otherwise = 0
@@ -69,6 +67,12 @@ oder b c | b + c > 0 = 1
 exoder :: Int -> Int -> Int
 exoder b c | b + c == 1 = 1
            | otherwise = 0
+
+-- Diese Funktion überprüft immer das erste Element beider Listen mithilfe der exoder-Funktion.
+-- Wenn exoder == 1 gilt, die Elemente also unterschiedlich sind, addiert die Funktion
+-- 1 zu der Rückgabe, entfernt die untersuchten Elemente und ruft sich selbst Rekursiv mit den
+-- nun gekürzten Listen auf. Dies geschieht auch in dem Fall, dass die beiden Elemente gleich sind,
+-- mit der Ausnahme, dass natürlich der Rückgabewert nicht erhöht wird.
 
 hamming_distance :: [Int] -> [Int] -> Int
 hamming_distance [] [] = 0
