@@ -1,6 +1,28 @@
 {- Frederick Brandenburg, Ferdinand Markward Scheller
 Tutoriumsnummer: 03 -}
 
+-- AUGABE 1
+
+{-# LANGUAGE NPlusKPatterns #-}
+
+collList :: Integer -> [Integer]
+collList 1 = [1]
+collList (n+1) = (n+1): collList (next(n+1))
+ where
+   next n | mod n 2 == 0 = div n 2
+          | otherwise    = 3*n + 1
+
+{-
+collList 5 => 5: (collList (next(5)))
+           => 5: (16: (collList (next(16)))
+           => 5: (16: (8: (collList (next(8))))
+           => 5: (16: (8: (4: collList (next(4)))))
+           => 5: (16: (8: (4: (2: (collList (next(2)))))))
+           => 5: (16: (8: (4: (2: ([1])))))
+           => [5,16,8,4,2,1]
+-}
+
+
 -- AUFGABE 2
 
 sumOfTeiler :: Int -> Int -> Int -> Int
