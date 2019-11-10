@@ -52,17 +52,17 @@ euler n = 1 / (factorial n) + euler (n-1)
 -- AUFGABE 4
 
 insertInPos :: a -> Int -> [a] -> [a]
-insertInPos e pos [] = []
-insertInPos e 0 (b:bs) = e : insertInPos e (-1) (b:bs)
+insertInPos e pos [] = if pos == 0 then e:[] else error "List is not that long!"
+insertInPos e 0 (b:bs) = e : (b:bs)
 insertInPos e pos (b:bs) = b : insertInPos e (pos-1) bs
 
---ich mag deins nicht deswegen hier meins:
+{- --ich mag deins nicht deswegen hier meins:
 insertInPos2 :: a -> Int -> [a] -> [a]
 insertInPos2 e pos (b:bs) = if pos < 0 then error "not defined for negative numbers" else insertInPos e pos (b:bs)
 --kann man das hier vllt. anders machen? ^ Sonst wird das bei jedem Rekursionsdurchlauf aufgerufen, dat is kacke :/
 insertInPos2 e pos [] = if pos == 0 then e:[] else error "List is not that long!"
-insertInPos2 e 0 (b:bs) = e : (b:bs)  
-insertInPos2 e pos (b:bs) = b : insertInPos e (pos-1) bs
+insertInPos2 e 0 (b:bs) = e : (b:bs)
+insertInPos2 e pos (b:bs) = b : insertInPos e (pos-1) bs -}
 
 
 -- AUFGABE 5
