@@ -46,7 +46,6 @@ factorial 0 = 1
 factorial n = n * factorial (n-1)
 
 euler :: Double -> Double
--- haha
 euler 0 = 1
 euler n = 1 / (factorial n) + euler (n-1)
 
