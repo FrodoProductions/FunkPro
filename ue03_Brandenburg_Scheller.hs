@@ -18,8 +18,14 @@ fromDecTo 5 555
 -}
 
 
--- AUGABE 5
+-- AUFGABE 5
 
 isSorted :: Ord a => (a -> a -> Bool) -> [a] -> Bool
 isSorted f (x:[]) = True
 isSorted f (x:y:xs) = f x y && isSorted f (y:xs)
+
+{- Testlauf
+
+isSorted (>=) [5,5,4,2,1,1,1]
+> True
+-}
