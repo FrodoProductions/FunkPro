@@ -16,3 +16,10 @@ dec2 b num | b<1 || b>9 = error "Base must be between 0 and 10!"
 fromDecTo 5 555
 > [4,2,1,0]
 -}
+
+
+-- AUGABE 5
+
+isSorted :: Ord a => (a -> a -> Bool) -> [a] -> Bool
+isSorted f (x:[]) = True
+isSorted f (x:y:xs) = f x y && isSorted f (y:xs)
