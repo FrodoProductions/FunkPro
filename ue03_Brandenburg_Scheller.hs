@@ -47,4 +47,22 @@ listToInt (x:xs) = x * 10^(length xs) + listToInt xs
 {- Testlauf
 
 reverseDigits 123456789
-> 987654321}
+> 987654321
+-}
+
+
+-- AUFGABE 7
+
+poss :: Eq a => a -> [a] -> [Int]
+poss e xs = atPos e 0 xs
+
+atPos :: Eq a => a -> Int -> [a] -> [Int]
+atPos e n es | n >= (length es) = []
+             | e == (es !! n) = n : atPos e (n+1) es
+             | otherwise = atPos e (n+1) es
+
+{- Testlauf
+
+poss 'L' ['H','A','L','L','O']
+> [2,3]
+-}
