@@ -29,3 +29,22 @@ isSorted f (x:y:xs) = f x y && isSorted f (y:xs)
 isSorted (>=) [5,5,4,2,1,1,1]
 > True
 -}
+
+
+-- AUFGABE 6
+
+reverseDigits :: Int -> Int
+reverseDigits n = listToInt( reverse (intToList n))
+
+intToList :: Int -> [Int]
+intToList 0 = []
+intToList n = intToList (n `div` 10) ++ [n `mod` 10]
+
+listToInt :: [Int] -> Int
+listToInt [] = 0
+listToInt (x:xs) = x * 10^(length xs) + listToInt xs
+
+{- Testlauf
+
+reverseDigits 123456789
+> 987654321}
