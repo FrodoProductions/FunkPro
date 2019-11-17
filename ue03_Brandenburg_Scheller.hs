@@ -3,6 +3,12 @@ Tutoriumsnummer: 03 -}
 
 -- AUFGABE 1
 
+-- Diese Aufgabe haben wir in zwei Funktionen aufgeteilt; zunächst die
+-- Umwandlug einer Oktal- zu einer dreistelligen Binärzahl und dann die Umwandlung
+-- einer vierstelligen Binärzahl zu einer hexadezimalen Ziffer.
+
+okt2hex :: [Char] -> [Char]
+-- Der Oktalzahl wird hier noch eine 0 vorangesetllt.
 okt2hex xs = reverse (bin2hex (okt2bin (reverse (['0'] ++ xs))))
 
 okt2bin :: [Char] -> [Char]
@@ -20,6 +26,9 @@ okt2bin (n:ns)
 
 bin2hex :: [Char] -> [Char]
 bin2hex [] = []
+-- Sofern die binäre Zeichenkette nicht perfekt aufgeht bzw. das letzte
+-- untersuchte Segment weniger als 4 Zahlen enthält, wird dieses Segment ignoriert
+-- und die Funktion terminiert.
 bin2hex (x:[]) = []
 bin2hex (x:y:[]) = []
 bin2hex (x:y:z:[]) = []
@@ -48,6 +57,7 @@ okt2hex "25476"
 > "2B3E"
 -}
 
+
 -- AUFGABE 2
 
 ggt_of :: [Int] -> Int
@@ -63,6 +73,7 @@ euklid x y = if y /= 0 then euklid y (mod x y) else x
 > 15
 -}
 
+
 -- AUFGABE 3
 
 balance :: [Char] -> Bool
@@ -73,6 +84,8 @@ balance text = bal [] text
    bal stapel ('(':xs) = bal (')':stapel) xs
    bal stapel ('[':xs) = bal (']':stapel) xs
    bal stapel ('{':xs) = bal ('}':stapel) xs
+   -- Hier wurde einfach ein zusätzliches Wächtersymbol eingesetzt, welches überprüft,
+   -- ob das untersuchte Zeichen keine Klammer ist.
    bal (s:stapel) (x:xs) | x/='(' && x/='[' && x/='{' && x/=')' && x/=']' && x/='}' = bal (s:stapel) xs
                          | s==x = bal stapel xs
    bal _ _ = False
@@ -103,6 +116,10 @@ fromDecTo 5 555
 
 -- AUFGABE 5
 
+-- Diese Funktion untersucht jeweils zwei benachbarte Elemente, wobei sie rekursiv jeweils
+-- eine Stelle weiter rückt und die Gültigkeit der eingegeben Funktion mit einer logischen Verundung
+-- aller Ergebnisse feststellt.
+
 isSorted :: Ord a => (a -> a -> Bool) -> [a] -> Bool
 isSorted f (x:[]) = True
 isSorted f (x:y:xs) = f x y && isSorted f (y:xs)
@@ -115,6 +132,9 @@ isSorted (>=) [5,5,4,2,1,1,1]
 
 
 -- AUFGABE 6
+
+-- Die Zahl wird in eine Liste umgewandelt, diese wird einfach umgedreht und dann
+-- wird aus der Liste wieder die ursprüngliche Zahl berechnet.
 
 reverseDigits :: Int -> Int
 reverseDigits n = listToInt( reverse (intToList n))
