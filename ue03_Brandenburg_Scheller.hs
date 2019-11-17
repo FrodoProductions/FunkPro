@@ -1,6 +1,48 @@
 {- Frederick Brandenburg, Ferdinand Markward Scheller
 Tutoriumsnummer: 03 -}
 
+-- AUFGABE 1
+
+okt2hex xs = reverse (bin2hex (okt2bin (reverse xs)))
+
+okt2bin :: [Char] -> [Char]
+okt2bin [] = []
+okt2bin (n:ns)
+ | n=='0' = ['0','0','0'] ++ okt2bin ns
+ | n=='1' = ['1','0','0'] ++ okt2bin ns
+ | n=='2' = ['0','1','0'] ++ okt2bin ns
+ | n=='3' = ['1','1','0'] ++ okt2bin ns
+ | n=='4' = ['0','0','1'] ++ okt2bin ns
+ | n=='5' = ['1','0','1'] ++ okt2bin ns
+ | n=='6' = ['0','1','1'] ++ okt2bin ns
+ | n=='7' = ['1','1','1'] ++ okt2bin ns
+ | otherwise = error "Octal input not in range!"
+
+bin2hex :: [Char] -> [Char]
+bin2hex [] = []
+bin2hex (x:[]) = []
+bin2hex (x:y:[]) = []
+bin2hex (x:y:z:[]) = []
+bin2hex xs = case (take 4 xs) of
+   ['0','0','0','0'] -> '0' : bin2hex (drop 4 xs)
+   ['1','0','0','0'] -> '1' : bin2hex (drop 4 xs)
+   ['0','1','0','0'] -> '2' : bin2hex (drop 4 xs)
+   ['1','1','0','0'] -> '3' : bin2hex (drop 4 xs)
+   ['0','0','1','0'] -> '4' : bin2hex (drop 4 xs)
+   ['1','0','1','0'] -> '5' : bin2hex (drop 4 xs)
+   ['0','1','1','0'] -> '6' : bin2hex (drop 4 xs)
+   ['1','1','1','0'] -> '7' : bin2hex (drop 4 xs)
+   ['0','0','0','1'] -> '8' : bin2hex (drop 4 xs)
+   ['1','0','0','1'] -> '9' : bin2hex (drop 4 xs)
+   ['0','1','0','1'] -> 'A' : bin2hex (drop 4 xs)
+   ['1','1','0','1'] -> 'B' : bin2hex (drop 4 xs)
+   ['0','0','1','1'] -> 'C' : bin2hex (drop 4 xs)
+   ['1','0','1','1'] -> 'D' : bin2hex (drop 4 xs)
+   ['0','1','1','1'] -> 'E' : bin2hex (drop 4 xs)
+   ['1','1','1','1'] -> 'F' : bin2hex (drop 4 xs)
+   otherwise -> error "Binary not in range!"
+
+
 -- AUFGABE 4
 
 fromDecTo :: Int -> Int -> [Int]
