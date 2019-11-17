@@ -48,6 +48,20 @@ okt2hex "25476"
 > "2B3E"
 -}
 
+-- AUFGABE 2
+
+ggt_of :: [Int] -> Int
+ggt_of [] = 0
+ggt_of (x:xs) = euklid x (ggt_of xs)
+
+euklid :: Int -> Int -> Int
+euklid x y = if y /= 0 then euklid y (mod x y) else x
+
+{- Testlauf
+
+[15, 30, 600, 915]
+> 15
+-}
 
 -- AUFGABE 3
 
