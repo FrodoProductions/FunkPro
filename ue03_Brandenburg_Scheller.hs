@@ -49,6 +49,27 @@ okt2hex "25476"
 -}
 
 
+-- AUFGABE 3
+
+balance :: [Char] -> Bool
+balance text = bal [] text
+ where
+   bal :: [Char] -> [Char] -> Bool
+   bal [] [] = True
+   bal stapel ('(':xs) = bal (')':stapel) xs
+   bal stapel ('[':xs) = bal (']':stapel) xs
+   bal stapel ('{':xs) = bal ('}':stapel) xs
+   bal (s:stapel) (x:xs) | x/='(' && x/='[' && x/='{' && x/=')' && x/=']' && x/='}' = bal (s:stapel) xs
+                         | s==x = bal stapel xs
+   bal _ _ = False
+
+{- Testlauf
+
+balance "54+(a-[4,9))"
+> False
+-}
+
+
 -- AUFGABE 4
 
 fromDecTo :: Int -> Int -> [Int]
