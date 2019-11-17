@@ -3,7 +3,7 @@ Tutoriumsnummer: 03 -}
 
 -- AUFGABE 1
 
-okt2hex xs = reverse (bin2hex (okt2bin (reverse xs)))
+okt2hex xs = reverse (bin2hex (okt2bin (reverse (['0'] ++ xs))))
 
 okt2bin :: [Char] -> [Char]
 okt2bin [] = []
@@ -41,6 +41,12 @@ bin2hex xs = case (take 4 xs) of
    ['0','1','1','1'] -> 'E' : bin2hex (drop 4 xs)
    ['1','1','1','1'] -> 'F' : bin2hex (drop 4 xs)
    otherwise -> error "Binary not in range!"
+
+{- Testlauf
+
+okt2hex "25476"
+> "2B3E"
+-}
 
 
 -- AUFGABE 4
