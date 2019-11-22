@@ -49,3 +49,18 @@ Jetzt werden alle Tupel enfernt bei denen n==m:
 (3,0)]
 
 -}
+
+
+-- AUFGABE 5
+
+counts :: (Num a, Eq b) => b -> [b] -> a
+counts e es = fromIntegral (length (filter (== e) es))
+
+single :: (a -> Bool) -> [a] -> Bool
+single f xs = length (filter f xs) == 1
+
+mostly :: (a -> Bool) -> [a] -> Bool
+mostly f xs = length (filter f xs) > (length xs) `div` 2
+
+bin2dec :: [Integer] -> Integer
+-- bin2dec xs =
