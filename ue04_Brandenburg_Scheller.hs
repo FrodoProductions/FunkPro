@@ -50,6 +50,28 @@ Jetzt werden alle Tupel enfernt bei denen n==m:
 
 -}
 
+-- AUFGABE 2
+
+maxProdOf :: Int -> [Int] -> [Int]
+maxProdOf _ [] = error"Empty List"
+maxProdOf k xs
+ | k > length xs = error"Invalid input for k"
+ | k < 1 = error"Invalid input for k" 
+ | otherwise = maxProdOfHelp k xs [0]
+
+
+maxProdOfHelp :: Int -> [Int] -> [Int] -> [Int]
+maxProdOfHelp k [] acc = acc
+maxProdOfHelp k xs acc 
+ | (foldr (*) 1 acc) > (foldr (*) 1 (take k xs)) = maxProdOfHelp k (drop 1 xs) acc
+ | otherwise = maxProdOfHelp k (drop 1 xs) (take k xs)
+
+{-Testlauf
+maxProdOf 3 [3,5,1,2,9,0,2,3,5,12,4,1,0,34,2,1]
+> [5,12,4]
+-}
+
+
 -- AUFGABE 3
 
 -- Beispiel aus der Vorlesung
