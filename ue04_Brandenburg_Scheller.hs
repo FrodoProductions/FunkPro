@@ -50,6 +50,45 @@ Jetzt werden alle Tupel enfernt bei denen n==m:
 
 -}
 
+-- AUFGABE 3
+
+-- Beispiel aus der Vorlesung
+primes :: Int -> [Int]
+primes n = takeWhile (<n) (sieb [2..])
+ where
+   sieb (l:xs) = l : sieb [x | x <- xs, mod x l /= 0]
+
+-- a)
+-- Diese Funktion stellt die Liste der schwachen Goldbachschen Tripel mit einem Listengenerator zusammen,
+-- wobei x, y und z auf die Liste der Primzahlen kleiner/gleich n beschränkt werden.
+-- Die Anweisung "x<=y, y<=z" wurde implementiert, damit nicht das selbe Tripel mehrfach in anderer
+-- Anordnung ausgegeben wird (z. B. (3,3,13),(3,13,3),(13,3,3) etc.)
+weakGoldbachTriples :: Int -> [(Int,Int,Int)]
+weakGoldbachTriples n | n<=5 || n`mod`2==0 = error "n must be greater than 5 and an odd number!"
+                      | otherwise = [(x,y,z) | x <- (primes n), y <- (primes n), z <- (primes n), x<=y, y<=z, x+y+z == n]
+
+{- Testlauf
+
+weakGoldbachTriples 13
+> [(3,3,7),(3,5,5)]
+-}
+
+
+-- b)
+-- Hier wird für jede ungerade Zahl kleiner/gleich m untersucht, ob sie die schwache Goldbachsche Vermutung erfüllt
+-- und die Ergebnisse werden mit einer logischen Konjunktion verbunden.
+wGTripelsUntil :: Int -> Bool
+wGTripelsUntil 5 = True
+wGTripelsUntil m | m<5 = error "m must be greater than 5!"
+                 | m`mod`2==0 = weakGoldbachTriples (m-1) /= [] && wGTripelsUntil (m-3)
+                 | otherwise = weakGoldbachTriples m /= [] && wGTripelsUntil (m-2)
+
+{- Testlauf
+
+wGTripelsUntil 450
+> True
+-}
+
 
 -- AUFGABE 4
 
