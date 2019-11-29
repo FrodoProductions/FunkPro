@@ -31,3 +31,13 @@ selectSort f xs = let
 selectSort (<) ['b','g','e','c','a','l','x','r']
 > "abceglrx"
 -}
+
+
+-- AUFGABE 2
+
+-- Laufzeitkomplexitäten der Teilfunktionen:
+-- tail: O(1), da diese Funktion von der Länge der Liste unabhängig ist.
+-- zipWith: O(n), da aus einer Liste mit n Elementen immer 2n Tupel generiert werden.
+-- and: O(n), dabei einer Liste der Länge n immer n-1 Vergleiche durchgeführt werden müssen.
+
+-- Daher: O(n)
