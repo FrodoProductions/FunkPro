@@ -25,3 +25,9 @@ selectSort f xs = let
    -- Diese Funktion verwendet die filter Funktion, um eine Liste aller Elemente =/ e zu erstellen.
    deleteElem :: Eq a => a -> [a] -> [a]
    deleteElem e xs = filter (/=e) xs
+
+{- Testlauf
+
+selectSort (<) ['b','g','e','c','a','l','x','r']
+> "abceglrx"
+-}
