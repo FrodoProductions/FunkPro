@@ -41,3 +41,16 @@ selectSort (<) ['b','g','e','c','a','l','x','r']
 -- and: O(n), dabei einer Liste der Länge n immer n-1 Vergleiche durchgeführt werden müssen.
 
 -- Daher: O(n)
+
+
+-- AUFGABE 3
+
+-- mult:
+-- Die Anzahl der Operationen ist gleich m, da in jedem Schritt mit m>0
+-- die Funktion mit m-1 aufgerufen wird.
+-- Daher O(n).
+
+-- russMult:
+-- m wird, falls ungerade, zunächst per ganzzahliger Division zu einer geraden Zahl umgewandelt.
+-- Danach nimmt der Wert von m logarithmisch ab, da m immer wieder durch 2 geteilt wird.
+-- russMult kann also mit O(log2 m) approximiert werden.
