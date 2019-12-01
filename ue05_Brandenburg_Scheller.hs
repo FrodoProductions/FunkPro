@@ -1,6 +1,8 @@
 {- Frederick Brandenburg, Ferdinand Markward Scheller
 Tutoriumsnummer: 03 -}
 
+import Data.List
+
 -- AUFGABE 1
 
 -- Laufzeitkomplexität: O(n)+O(n)∈O(n)
@@ -37,7 +39,8 @@ selectSort (<) ['b','g','e','c','a','l','x','r']
 
 -- Laufzeitkomplexitäten der Teilfunktionen:
 -- tail: O(1), da diese Funktion von der Länge der Liste unabhängig ist.
--- zipWith: O(n), da aus einer Liste mit n Elementen immer 2n Tupel generiert werden.
+-- zipWith: O(n), da aus zwei Listen mit Länge n und m jeweils soviele Tupel generiert werden wie die kürzere
+-- Liste lang ist (Im worst case sind sie gleich lang).
 -- and: O(n), dabei einer Liste der Länge n immer n-1 Vergleiche durchgeführt werden müssen.
 
 -- Daher: O(n)
@@ -71,3 +74,42 @@ traceBubbleSort xs | isSorted (<=) xs = [xs]
                     moveBubble [x] = [x]
                     moveBubble (x:y:rest) | (<=) x y = x: moveBubble (y:rest)
                                           | otherwise = y: moveBubble (x:rest)
+
+{- Testlauf
+
+traceBubbleSort [8,6,4,2,3,1,5]
+> [[1,2,3,4,5,6,8],[2,1,3,4,5,6,8],[2,3,1,4,5,6,8],[4,2,3,1,5,6,8],[6,4,2,3,1,5,8],[8,6,4,2,3,1,5]]
+-}
+
+
+-- AUFGABE 5
+
+-- a)
+  -- i)
+
+allSuffixes :: [a] -> [[a]]
+allSuffixes [] = []
+allSuffixes xs = xs : allSuffixes (tail xs)
+
+  -- ii)
+
+prefix :: Ord a => [a] -> [a] -> [a]
+prefix [] ys = []
+prefix xs [] = []
+prefix (x:xs) (y:ys) | x/=y = []
+                     | otherwise = x : prefix xs ys
+
+  -- iii)
+
+largestPrefix :: Ord a => [[a]] -> (Int, [a])
+largestPrefix xs = maximum $ [(length x, x) | x <- (prefixList xs)]
+ where
+   prefixList :: Ord a => [[a]] -> [[a]]
+   prefixList (x:y:[]) = [prefix x y]
+   prefixList (x:y:xs) = (prefix x y) : prefixList (y:xs)
+
+
+-- b)
+
+maxLengthRepSeq :: Ord a => [a] -> [a]
+maxLengthRepSeq = snd . largestPrefix . sort . allSuffixes
