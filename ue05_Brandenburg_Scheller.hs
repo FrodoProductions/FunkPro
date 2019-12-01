@@ -53,4 +53,21 @@ selectSort (<) ['b','g','e','c','a','l','x','r']
 -- russMult:
 -- m wird, falls ungerade, zunächst per ganzzahliger Division zu einer geraden Zahl umgewandelt.
 -- Danach nimmt der Wert von m logarithmisch ab, da m immer wieder durch 2 geteilt wird.
--- russMult kann also mit O(log2 m) approximiert werden.
+-- russMult kann also mit O(log2 n) approximiert werden.
+
+
+-- AUFGABE 4
+
+-- b)
+
+isSorted :: (Ord a) => (a->a->Bool) -> [a] -> Bool
+isSorted cmp xs = and (zipWith cmp xs (tail xs))
+
+traceBubbleSort :: (Ord a) => [a] -> [[a]]
+traceBubbleSort xs | isSorted (<=) xs = [xs]
+                   | otherwise = traceBubbleSort (moveBubble xs) ++ [xs]
+                    where
+                    moveBubble [] = []
+                    moveBubble [x] = [x]
+                    moveBubble (x:y:rest) | (<=) x y = x: moveBubble (y:rest)
+                                          | otherwise = y: moveBubble (x:rest)
