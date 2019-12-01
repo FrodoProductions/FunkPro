@@ -61,6 +61,12 @@ selectSort (<) ['b','g','e','c','a','l','x','r']
 
 -- AUFGABE 4
 
+-- a)
+
+-- Im worst case befindet sich jedes Element maximal weit von seinem sortierten
+-- Platz entfernt, es müsste also jedes Element bis zu n mal bewegt werden,
+-- um Ornung herzustellen. Die Komplexität kann also mit O(n^2) approximiert werden.
+
 -- b)
 
 isSorted :: (Ord a) => (a->a->Bool) -> [a] -> Bool
@@ -87,20 +93,40 @@ traceBubbleSort [8,6,4,2,3,1,5]
 -- a)
   -- i)
 
+-- Diese Funktion fügt immer die aktuelle Liste zu der Rückgabeliste hinzu und
+-- ruft sich dann rekursiv selbst auf, wobei die Liste um ihr erstes Element gekürzt wird.
 allSuffixes :: [a] -> [[a]]
 allSuffixes [] = []
 allSuffixes xs = xs : allSuffixes (tail xs)
 
+{- Testlauf
+
+allSuffixes [1,2,3,4,5,6,7,8,9]
+> [[1,2,3,4,5,6,7,8,9],[2,3,4,5,6,7,8,9],[3,4,5,6,7,8,9],[4,5,6,7,8,9],[5,6,7,8,9],[6,7,8,9],[7,8,9],[8,9],[9]]
+-}
+
   -- ii)
 
+-- Die jeweils erste Stelle beider Listen wird auf Gleichheit untersucht; ist diese vorhanden,
+-- so wird die Stelle zur Rückgabe hinzugefügt, beide Listen werden um die erste Stelle reduziert
+-- und es erfolgt ein rekursiver Aufruf.
 prefix :: Ord a => [a] -> [a] -> [a]
 prefix [] ys = []
 prefix xs [] = []
 prefix (x:xs) (y:ys) | x/=y = []
                      | otherwise = x : prefix xs ys
 
+{- Testlauf
+
+prefix [0,0,1,0,0,1,1,1,0,0] [0,0,1,0,0,1,0,0,1,0]
+> [0,0,1,0,0,1]
+-}
+
   -- iii)
 
+-- prefixList geht zunächst jedes Paar in der Eingabeliste durch und generiert für jedes das gemeinsame
+-- Präfix (falls vorhanden). largestPrefix wählt dann das maximale Element aus dieser Liste aus
+-- und gibt es zurück.
 largestPrefix :: Ord a => [[a]] -> (Int, [a])
 largestPrefix xs = maximum $ [(length x, x) | x <- (prefixList xs)]
  where
@@ -108,8 +134,30 @@ largestPrefix xs = maximum $ [(length x, x) | x <- (prefixList xs)]
    prefixList (x:y:[]) = [prefix x y]
    prefixList (x:y:xs) = (prefix x y) : prefixList (y:xs)
 
+{- Testlauf
+
+largestPrefix ["aldpoakn","dsfji","ftrdesa","iubu","jidi","jiij","lopkb","oi"]
+> (2,"ji")
+-}
+
 
 -- b)
-
+-- Diese Funktion bildet zunächst alle Suffixe der Eingabeliste und sortiert diese. Wenn es Widerholungen in der
+-- ursprünglichen Liste gab, so stehen sie nun nebeneinander. Nun wird einfach das längste Prefix gesucht und ausgegeben.
 maxLengthRepSeq :: Ord a => [a] -> [a]
 maxLengthRepSeq = snd . largestPrefix . sort . allSuffixes
+
+{- Testlauf
+
+maxLengthRepSeq "Loremipsumdolorsitametconsetetursadipscingelitrseddiamnonumyeirmodtemporinviduntutlaboreetdoloremagnaaliquyamerat"
+> "dolor"
+-}
+
+
+-- c)
+-- allSuffixes: Aus einer Liste der Länge n werden n Teillisten gebildet, daher O(n).
+-- prefix: Im worst case sind beide Eingaben unendlich und jedes Element muss untersucht werden: O(n).
+-- largestPrefix: In prefixList finden n-1 Untersuchungen der Liste statt, daher O(n),
+-- anschließend wird die neue Liste geneiert und jedes Element untersucht, es finden also
+-- 2n Reduktionen statt, also O(n).
+-- maxLengthRepSeq: O(n) (allSuffixes) + O(n) (sort) + O(n) (largestPrefix) + O(1) (snd) ∈ O(n)
