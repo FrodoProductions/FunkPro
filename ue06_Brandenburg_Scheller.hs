@@ -37,3 +37,14 @@ yard2m (Yard 42)
 mile2km (Mile 100)
 > Km 160.9
 -}
+
+
+-- AUFGABE 3
+
+data SimpleBT = L | N SimpleBT SimpleBT
+ deriving (Eq, Show)
+
+insertLeaves :: Integer -> SimpleBT -> SimpleBT
+insertLeaves 0 t = t
+insertLeaves i (N lt rt) = (N (insertLeaves i lt) rt)
+insertLeaves i L = insertLeaves (i-1) (N L L)
