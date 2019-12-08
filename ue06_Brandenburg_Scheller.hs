@@ -91,24 +91,32 @@ successor :: (Ord a) => a -> BSearchTree a -> Maybe a
 successor a b = nachfolger (findElement a b)
 
 nachfolger :: (Ord a) => BSearchTree a -> Maybe a
-nachfolger (Node x ltree rtree) = minimum rtree
-nachfolger (Node x ltree Nil) = maximum ltree
+nachfolger (Node x ltree Nil) = Just (biggest ltree)
+nachfolger (Node x ltree rtree) = Just (smallest rtree)
 
-minimum :: (Ord a) => BSearchTree a -> a
-minimum (Node x Nil rtree) = x
-minimum (Node x ltree rtree) minimum ltree
+smallest :: (Ord a) => BSearchTree a -> a
+smallest Nil = error "No successor!"
+smallest (Node x Nil _) = x
+smallest (Node x ltree _) = smallest ltree
 
-maximumn :: (Ord a) => BSearchTree a -> a
-minimum (Node x ltree Nil) = x
-minimum (Node x ltree rtree) = minimum rtree
+biggest :: (Ord a) => BSearchTree a -> a
+biggest Nil = error "No successor!"
+biggest (Node x _ Nil) = x
+biggest (Node x _ rtree) = biggest rtree
 
 
-findElement :: (Ord a) => a -> BSearchTree a -> BSearchTree a  
-findElement _ Nil = Error "Element not in Tree"
+findElement :: (Ord a) => a -> BSearchTree a -> BSearchTree a
+findElement _ Nil = error "Element not in Tree"
 findElement k (Node x ltree rtree)
-| k == x = (Node x (ltree) (rtree))
-| k<x = findElement k ltree
-| otherwise = findElement k rtree
+ | k == x = (Node x (ltree) (rtree))
+ | k<x = findElement k ltree
+ | otherwise = findElement k rtree
+
+{- Testlauf
+
+successor 3 (Node 3 (Node 1 Nil (Node 2 Nil Nil)) (Node 5 Nil Nil))
+> Just 5
+-}
 
 
 -- AUFGABE 5
