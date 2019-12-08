@@ -87,11 +87,28 @@ complete (Node 1 (Node 2 (Node 8 Nil Nil) Nil)(Node 5 Nil Nil))
 > False
 -}
 
+successor :: (Ord a) => a -> BSearchTree a -> Maybe a
+successor a b = nachfolger (findElement a b)
 
--- successor :: (Ord a) => a -> BSearchTree a -> Maybe a
--- if rtree exists: return nachfolger von node rtree
--- otherwise return nachfolger von node ltree
--- nil nil -> kein Nachfolger
+nachfolger :: (Ord a) => BSearchTree a -> Maybe a
+nachfolger (Node x ltree rtree) = minimum rtree
+nachfolger (Node x ltree Nil) = maximum ltree
+
+minimum :: (Ord a) => BSearchTree a -> a
+minimum (Node x Nil rtree) = x
+minimum (Node x ltree rtree) minimum ltree
+
+maximumn :: (Ord a) => BSearchTree a -> a
+minimum (Node x ltree Nil) = x
+minimum (Node x ltree rtree) = minimum rtree
+
+
+findElement :: (Ord a) => a -> BSearchTree a -> BSearchTree a  
+findElement _ Nil = Error "Element not in Tree"
+findElement k (Node x ltree rtree)
+| k == x = (Node x (ltree) (rtree))
+| k<x = findElement k ltree
+| otherwise = findElement k rtree
 
 
 -- AUFGABE 5
