@@ -49,6 +49,28 @@ insertLeaves 0 t = t
 insertLeaves i (N lt rt) = (N (insertLeaves i lt) rt)
 insertLeaves i L = insertLeaves (i-1) (N L L)
 
+-- Aufgabe 4
+postOrder :: (Ord a) => BSearchTree a -> [a]
+postOrder Nil = []
+postOrder (Node x ltree rtree) = postOrder ltree ++ rtree : x
+
+
+oneChild :: (Ord a) => BSearchTree a -> Bool
+oneChild (Node x Nil Nil) = False
+oneChild (Node x ltree Nil) = True
+oneChild (Node x Nil rtree) = True
+oneChild (Node x ltree rtree) = oneChild ltree || oneChild rtree
+
+complete :: (Ord a) => BSearchTree a -> Bool
+complete (Node x rtree ltree) = not oneChild x rtree ltree
+
+
+
+successor :: (Ord a) => a -> BSearchTree a -> Maybe a
+-- if rtree exists: return nachfolger von node rtree
+-- otherwise return nachfolger von node ltree
+-- nil nil -> kein Nachfolger
+
 
 -- AUFGABE 5
 
