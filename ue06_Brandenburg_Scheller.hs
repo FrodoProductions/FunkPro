@@ -44,6 +44,9 @@ mile2km (Mile 100)
 data SimpleBT = L | N SimpleBT SimpleBT
  deriving (Eq, Show)
 
+data BSearchTree a = Nil | Node a (BSearchTree a) (BSearchTree a)
+ deriving (Show, Eq)
+
 insertLeaves :: Integer -> SimpleBT -> SimpleBT
 insertLeaves 0 t = t
 insertLeaves i (N lt rt) = (N (insertLeaves i lt) rt)
@@ -52,7 +55,7 @@ insertLeaves i L = insertLeaves (i-1) (N L L)
 -- Aufgabe 4
 postOrder :: (Ord a) => BSearchTree a -> [a]
 postOrder Nil = []
-postOrder (Node x ltree rtree) = postOrder ltree ++ rtree : x
+postOrder (Node x ltree rtree) = postOrder ltree ++ postOrder rtree ++ [x]
 
 
 oneChild :: (Ord a) => BSearchTree a -> Bool
@@ -62,11 +65,11 @@ oneChild (Node x Nil rtree) = True
 oneChild (Node x ltree rtree) = oneChild ltree || oneChild rtree
 
 complete :: (Ord a) => BSearchTree a -> Bool
-complete (Node x rtree ltree) = not oneChild x rtree ltree
+complete b = not (oneChild b)
 
 
 
-successor :: (Ord a) => a -> BSearchTree a -> Maybe a
+-- successor :: (Ord a) => a -> BSearchTree a -> Maybe a
 -- if rtree exists: return nachfolger von node rtree
 -- otherwise return nachfolger von node ltree
 -- nil nil -> kein Nachfolger
