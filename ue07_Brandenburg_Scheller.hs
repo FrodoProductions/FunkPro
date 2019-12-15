@@ -84,13 +84,18 @@ fibonacci (S Zero) = (S Zero)
 fibonacci (S(S n)) = addN (fibonacci (S n)) (fibonacci n)
 
 isTeilerN :: Nat -> Nat -> B
-isTeilerN _ Zero = F
+isTeilerN _ Zero = F 
 isTeilerN Zero _ = T
-isTeilerN a (S b) = orB (eqN (subN a (S b)) (S b)) (andB (notB ( (<<) a (S b))) (isTeilerN (subN a (S b)) (S b)))
+isTeilerN a (S b) = orB (eqN (subN a (S b)) (S b)) (andB (notB ((<<) a (S b))) (isTeilerN (subN a (S b)) (S b)))
 
---isTeilerN :: Nat -> Nat -> B
---isTeilerN _ Zero = T
---isTeilerN n m =
+ggtN :: Nat -> Nat -> Nat
+ggtN _ Zero = error "Illegal Input"
+ggtN Zero b = b
+ggtN a b = iff ((<<) a b) (ggtNhelp b a a) (ggtNhelp a b b)
+
+ggtNhelp :: Nat -> Nat -> Nat -> Nat
+ggtNhelp a b Zero = error"no ggt exists"
+ggtNhelp a b (S h) = iff ((andB (isTeilerN a (S h)) (isTeilerN b (S h)))) (S h) (ggtNhelp a b h)
 
 -- b)
 
@@ -99,17 +104,20 @@ subN n m = foldn predN n m
 
 -- c)
 
---eqZ :: ZInt -> ZInt -> B
---eqZ (Z a b) (Z c d) = iff (andB (eqN a c) (eqN b d)) T (iff (c << a))
+eqZ :: ZInt -> ZInt -> B
+eqZ (Z a b) (Z c d) = iff (eqN (betragZ (absZ(Z a b))) (betragZ(absZ (Z c d)))) (iff (xorB ((<<) a b) (notB((<<) c d))) T F) F
+
+(<<<) :: ZInt -> ZInt -> B
+(<<<) (Z a b) (Z c d) = iff ((<<) a b) (iff ((<<) c d) (iff ((<<) (betragZ (absZ(Z c d))) (betragZ(absZ (Z a b)))) T F) T) (iff ((<<) (betragZ (absZ(Z a b))) (betragZ (absZ(Z c d)))) T F)
 
 negZ :: ZInt -> ZInt
 negZ (Z a b) = iff (a << b) (Z a b) (Z b a)
 
---maxZ :: ZInt -> ZInt -> ZInt
---maxZ (Z a b) (Z c d) = iff (((Z a b) <<< (Z c d)) andB (notB ((Z a b) eqZ (Z c d)))) (Z c d) (Z a b)
+maxZ :: ZInt -> ZInt -> ZInt
+maxZ (Z a b) (Z c d) = iff ((<<<) (Z a b) (Z c d)) (Z c d) (Z a b)
 
 multZ :: ZInt -> ZInt -> ZInt
-multZ (Z a b) (Z c d) = iff (eqN a b) (Z c d) (iff (b << a) (multZ (zsub (Z a b) (Z (S Zero) Zero)) (zadd (Z c d) (Z c d))) (multZ (zsub (Z a b) (Z Zero (S Zero))) (zadd (Z c d) (Z c d))))
+multZ (Z a b) (Z c d) = iff (xorB ((<<) a b) ((<<) c d))  (Z Zero ((multN (betragZ (absZ(Z a b))) (betragZ (absZ(Z c d)))))) (Z (multN (betragZ (absZ(Z a b))) (betragZ (absZ(Z c d)))) Zero)
 
 absZ :: ZInt -> ZInt
 absZ (Z a b) = iff (a << b) (Z b a) (Z a b)
@@ -117,6 +125,24 @@ absZ (Z a b) = iff (a << b) (Z b a) (Z a b)
 powZ :: ZInt -> Nat -> ZInt
 powZ (Z a b) Zero = (Z a b)
 powZ (Z a b) (S n) = powZ (multZ (Z a b) (Z a b)) n
+
+isTeilerZ :: ZInt -> ZInt -> B
+isTeilerZ (Z a b) (Z c d) = isTeilerN (betragZ (absZ(Z a b))) (betragZ (absZ(Z c d)))
+
+ggtZ :: ZInt -> ZInt -> ZInt
+ggtZ (Z a b) (Z c d) = (Z (ggtN (betragZ (absZ(Z a b))) (betragZ (absZ(Z c d)))) Zero) 
+
+multN :: Nat -> Nat -> Nat
+multN Zero (S a) = Zero
+multN (S Zero) (S a) = (S a)
+multN a b = multNhelp a b Zero
+
+multNhelp :: Nat -> Nat -> Nat -> Nat
+multNhelp Zero b acc = acc
+multNhelp (S a) b acc = multNhelp a b (addN b acc)
+
+betragZ :: ZInt -> Nat
+betragZ (Z a b) = subN a b
 
 -- d)
 
