@@ -128,3 +128,28 @@ int2zint i = int2zintHelp i (Z Zero Zero)
 
 instance Show ZInt where
   show z = show (zint2Int z)
+
+
+-- AUFGABE 3
+
+-- p=Terminator
+-- f=Funktion
+-- g=Elementmanipulator
+-- x=Element
+
+unfold p f g x | p x = []
+               | otherwise = f x : unfold p f g (g x)
+
+unfoldMap :: (a -> b) -> [a] -> [b]
+unfoldMap f xs = unfold null (f . (head)) (tail) xs
+
+allwaysFalse :: a -> Bool
+allwaysFalse x = False
+
+unfoldIterate :: (a -> a) -> a -> [a]
+unfoldIterate f x = unfold allwaysFalse f f x
+
+unfoldDec2bin :: Int -> [Int]
+unfoldDec2bin n = reverse(unfold zero (`mod` 2) (`quot` 2) n)
+ where
+   zero n = n==0
