@@ -35,6 +35,10 @@ andB :: B -> B -> B
 andB T T = T
 andB _ _ = F
 
+orB :: B -> B -> B
+orB F F = F
+orB _ _ = T
+
 iff :: B -> a -> a -> a
 iff T n m = n
 iff F n m = m
@@ -79,14 +83,19 @@ fibonacci Zero = Zero
 fibonacci (S Zero) = (S Zero)
 fibonacci (S(S n)) = addN (fibonacci (S n)) (fibonacci n)
 
+isTeilerN :: Nat -> Nat -> B
+isTeilerN _ Zero = F
+isTeilerN Zero _ = T
+isTeilerN a (S b) = orB (eqN (subN a (S b)) (S b)) (andB (notB ( (<<) a (S b))) (isTeilerN (subN a (S b)) (S b)))
+
 --isTeilerN :: Nat -> Nat -> B
 --isTeilerN _ Zero = T
 --isTeilerN n m =
 
 -- b)
 
-subN' :: Nat -> Nat -> Nat
-subN' n m = foldn predN n m
+subN :: Nat -> Nat -> Nat
+subN n m = foldn predN n m
 
 -- c)
 
