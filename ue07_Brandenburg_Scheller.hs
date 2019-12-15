@@ -130,6 +130,18 @@ instance Show ZInt where
   show z = show (zint2Int z)
 
 
+-- AUFGABE 2
+
+data BSearchTree a = Nil | Node a (BSearchTree a) (BSearchTree a)
+ deriving (Show, Eq)
+
+mapTree :: (Ord a, Ord b) => (a -> b) -> BSearchTree a -> BSearchTree b
+mapTree f (Node x Nil Nil) = (Node (f x) Nil Nil)
+mapTree f (Node x lt Nil) = (Node (f x) (mapTree f lt) Nil)
+mapTree f (Node x Nil rt) = (Node (f x) Nil (mapTree f rt))
+mapTree f (Node x lt rt) = (Node (f x) (mapTree f lt) (mapTree f rt))
+
+
 -- AUFGABE 3
 
 -- p=Terminator
@@ -143,11 +155,11 @@ unfold p f g x | p x = []
 unfoldMap :: (a -> b) -> [a] -> [b]
 unfoldMap f xs = unfold null (f . (head)) (tail) xs
 
-allwaysFalse :: a -> Bool
-allwaysFalse x = False
+alwaysFalse :: a -> Bool
+alwaysFalse x = False
 
 unfoldIterate :: (a -> a) -> a -> [a]
-unfoldIterate f x = unfold allwaysFalse f f x
+unfoldIterate f x = unfold alwaysFalse f f x
 
 unfoldDec2bin :: Int -> [Int]
 unfoldDec2bin n = reverse(unfold zero (`mod` 2) (`quot` 2) n)
