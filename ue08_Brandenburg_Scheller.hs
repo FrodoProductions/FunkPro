@@ -1,0 +1,83 @@
+{- Frederick Brandenburg, Ferdinand Markward Scheller
+Tutoriumsnummer: 03 -}
+
+-- AUFGABE 1
+
+-- a)
+
+{-
+
+IA:      reverse (reverse []) = []
+rev.1 -> reverse [] = []
+rev.1 -> [] = []
+
+IV: reverse (reverse xs) = xs
+
+IS:       reverse (reverse (x:xs)) = (x:xs)
+rev.2  -> reverse (reverse xs ++ [x]) = (x:xs)
+       -> [x] ++ reverse (reverse xs) = (x:xs)
+IV     -> [x] ++ xs = (x:xs)
+(++).2 -> (x:xs) = (x:xs)
+
+       QED
+
+-}
+
+-- b)
+
+{-
+
+IA:       reverse ([] ++ ys) = reverse ys ++ reverse []
+rev.1  -> reverse ([] ++ ys) = reverse ys ++ []
+(++).1 -> reverse ys = reverse ys
+
+IV: reverse (xs ++ ys) = reverse ys ++ reverse xs
+
+IS:      reverse ((x:xs) ++ ys) = reverse ys ++ reverse (x:xs)
+      -> reverse x:(xs ++ ys) = reverse ys ++ reverse (x:xs)
+rev.2 -> reverse (xs ++ ys) ++ [x] = reverse ys ++ reverse (x:xs)
+IV    -> reverse ys ++ reverse xs ++ [x] = reverse ys ++ reverse (x:xs)
+rev.2 -> reverse ys ++ reverse xs ++ [x] = reverse ys ++ reverse xs ++ [x]
+
+      QED
+
+-}
+
+-- c)
+
+{-
+
+IA:       elem a ([] ++ ys) = elem a [] || elem a ys
+(++).1 -> elem a ys = elem a [] || elem a ys
+elem.1 -> elem a ys = False || elem a ys
+       -> elem a ys = elem a ys
+
+IV: elem a (xs ++ ys) = elem a xs || elem a ys
+
+IS:   elem a ((x:xs) ++ ys) = elem a (x:xs) || elem a ys
+   -> elem a x:(xs ++ ys)
+   -> elem a [x] || elem a (xs ++ ys) = elem a [x] || elem a xs || elem a ys
+IV -> elem a [x] || elem a xs || elem a ys = elem a [x] || elem a xs || elem a ys
+
+      QED
+
+-}
+
+-- d)
+
+{-
+
+IA:        (takeWhile p []) ++ (dropWhile p []) = []
+takeW.1 -> [] ++ (dropWhile p []) = []
+dropW.1 -> [] ++ [] = []
+(++).1  -> [] = []
+
+IV: (takeWhile p xs) ++ (dropWhile p xs) = xs
+
+IS:   (takeWhile p (x:xs)) ++ (dropWhile p (x:xs)) = (x:xs)
+IV -> (takeWhile p (x:xs)) ++ (dropWhile p (x:xs)) = x : ((takeWhile p xs) ++ (dropWhile p xs))
+   -> (takeWhile p (x:xs)) ++ (dropWhile p (x:xs)) = (takeWhile p (x:xs)) ++ (dropWhile p (x:xs))
+
+   QED
+
+-}
