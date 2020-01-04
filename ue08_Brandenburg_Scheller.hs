@@ -81,3 +81,24 @@ IV -> (takeWhile p (x:xs)) ++ (dropWhile p (x:xs)) = x : ((takeWhile p xs) ++ (d
    QED
 
 -}
+
+
+-- AUFGABE 2
+
+{-
+
+IA: length (powerset []) = 2^(length [])
+-> length [[]] = 2^0
+-> 1 = 1
+
+IV: length (powerset xs) = 2^(length xs)
+
+IS:   length (powerset (x:xs)) = 2^(length (x:xs))
+   -> length (powerset (x:xs)) = 2^(length xs)*2^(length [x])
+   -> length (powerset (x:xs)) = length (powerset xs)*2^(length [x])
+   -> length (powerset xs)*length (powerset [x]) = length (powerset xs)*2^(length [x])
+IV -> length (powerset xs)*2^(length [x]) = length (powerset xs)*2^(length [x])
+
+   QED
+
+-}
