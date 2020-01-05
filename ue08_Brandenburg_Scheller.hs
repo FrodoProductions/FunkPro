@@ -82,6 +82,26 @@ IV -> (takeWhile p (x:xs)) ++ (dropWhile p (x:xs)) = x : ((takeWhile p xs) ++ (d
 
 -}
 
+-- e)
+
+{-
+
+IA:      map (f . g) [] = map f . map g []
+map.1 -> map (f . []) = map f . []
+map.1 -> map [] = map []
+map.1 -> [] = []
+
+IV: map (f . g) xs = map f . map g xs
+
+IS:      map (f . g) (x:xs) = map f . map g (x:xs)
+map.2 -> (f . g) x:map (f . g) xs = map f . map g (x:xs)
+      -> (f . g) x:map (f . g) xs = map f (map g (x:xs))
+map.2 -> (f . g) x:map (f . g) xs = map f ((g x):map g xs)
+      -> (f . g) x:map (f . g) xs = (f . g) x:map (f . g) xs
+
+      QED
+
+-}
 
 -- AUFGABE 2
 
