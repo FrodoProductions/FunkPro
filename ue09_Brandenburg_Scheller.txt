@@ -1,0 +1,52 @@
+Nr. 1
+
+IA: 			foldl g z [] = foldr f z (reverse [])
+foldl.1		⇔	z = foldr f z (reverse [])
+rev.1		⇔	z = foldr f z []
+foldr.1		⇔	z = z
+
+IV: foldl g z xs = foldr f z (reverse xs)
+
+
+Nr.2
+
+h x (g y z) = g z (h x y)		…h.g.1
+
+IA:			h x (foldl g y []) = foldl g (h x y) []
+foldl.1		⇔	h x y = foldl g (h x y) []
+foldl.1		⇔	h x y = h x y
+
+IV:			h x (foldl g y xs) = foldl g (h x y) xs
+
+IS:			h x (foldl g y (x:xs)) = foldl g (h x y) (x:xs)
+foldl.2		⇔	h x (foldl g (g y x) xs) = foldl g (h x y) (x:xs)
+IV		⇔	foldl g (h x (g y x)) xs = foldl g (h x y) (x:xs)
+h.g.1		⇔	foldl g (g x (h x y)) xs = foldl g (h x y) (x:xs)
+komm.		⇔	foldl g (g (h x y) x) xs = foldl g (h x y) (x:xs)
+foldl.2		⇔	foldl g (g (h x y) x) xs = foldl g (g (h x y) x) xs
+
+
+Nr. 4
+
+IA: 			map f (tree2List Nil) = tree2List (mapTree f Nil)
+treeLi.1		⇔	map f [] = tree2List(mapTree f Nil)
+map.1		⇔	[] = tree2List(mapTree f Nil)
+mapTr.1	⇔	[] = tree2List Nil
+treeLi.1		⇔	[] = []
+
+			map f (tree2List (Leaf x)) = tree2List (mapTree f (Leaf x))
+treeLi.2	⇔	map f [x] = tree2List (mapTree f (Leaf x))
+map.2		⇔	(f x) = tree2List (mapTree f (Leaf x))
+mapTr.2	⇔	(f x) = tree2List (Leaf (f x))
+treeLi.2	⇔	(f x) = (f x)
+
+
+IVL: 			map f (tree2List lt) = tree2List (mapTree f lt)
+IVR:			map f (tree2List rt) = tree2List (mapTree f rt)
+
+IS: 			map f (tree2List (Node x t rt)) = tree2List (mapTree f (Node x lt rt))
+mapTr.3	⇔	map f (tree2List (Node x t rt)) = tree2List (Node (f x) (mapTree f lt) (mapTree 			f rt))
+treeLi.3	⇔	map f (tree2List (Node x t rt)) = tree2List (mapTree f rt) ++ [(f x)] ++ 					tree2List (mapTree f lt)
+IVL, IVR	⇔	map f (tree2List (Node x t rt)) = map f (tree2List rt) ++ [(f x)] ++ map f 					(tree2List lt)
+treeLi.3	⇔	map f (tree2List rt ++ [x] ++ tree2List) = map f (tree2List rt) ++ [(f x)] ++ map 			f (tree2List lt)
+map		⇔	map f (tree2List rt) ++ [(f x)] ++ map f (tree2List lt)
