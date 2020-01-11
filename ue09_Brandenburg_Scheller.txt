@@ -50,3 +50,36 @@ treeLi.3	⇔	map f (tree2List (Node x t rt)) = tree2List (mapTree f rt) ++ [(f x
 IVL, IVR	⇔	map f (tree2List (Node x t rt)) = map f (tree2List rt) ++ [(f x)] ++ map f 					(tree2List lt)
 treeLi.3	⇔	map f (tree2List rt ++ [x] ++ tree2List) = map f (tree2List rt) ++ [(f x)] ++ map 			f (tree2List lt)
 map		⇔	map f (tree2List rt) ++ [(f x)] ++ map f (tree2List lt)
+
+Nr. 5
+
+1) Diese Anweisung besitzt keinen Rumpf.
+2) Die erste Klammer ist falsch gesetzt (richtig wäre z. B. (λ x.xzx)) und hinter der Anweisung steht eine weitere Einsetzungsanweisung (.) ohne dazugehörigen Lambda-Ausdruck.
+3) Hier stehen zwei Einsetzungsanweisungen, obwohl es nur einen Lambda-Ausdruck gibt.
+
+
+Nr. 6
+
+1) a und y sind durch λa und λy gebunden.
+2) Das z außerhalb der Klammern ist ungebunden, da jegliche Lambda-Ausdrücke in den Klammern stehen. Alle anderen sind gebunden (x in beiden Ausdrücken und z in der äußeren, dadurch auch in der inneren).
+3) z ist frei, da kein λz vorkommt. Dies gilt auch für w. Das x im ersten äußeren Ausdruck ((λx.xz)x) ist ebenfalls frei, da weder in diesem noch in einem höheren Ausdruck ein λx vorkommt. Alle anderen Variablen sind gebunden.
+4) In diesem Ausdruck sind nur das b und das x ungebunden, alle anderen sind entweder durch λczy oder λc gebunden.
+
+
+Nr. 7
+
+1) (λz y . z (λa b c . b(a b c)) y) (λs z . z) (λs z . s (z))
+→β (z (λa b c . b(a b c)) y) [(λs z . z)\z, (λs z . s (z))\y]
+→β (λs z . z) (λa b c . b(a b c)) (λs z . s (z))
+→α (λs z . z) (λa b c . b(a b c)) (λx y . x (y))
+→β z [(λx y . x (y))\z]
+→β (λx y . x (y))
+
+
+2) (λ z y . z y(λ a b . b)) (λ a b . a) (λ a b . b) z y
+→β (λ z y . z y(λ a b . b)) (λ a b . a) b [y\b]
+→β (λ z y . z y(λ a b . b)) (λ a b . a) y
+→β z y(λ a b . b) [(λ a b . a)\z, b\y]
+→β (λ a b . a) b (λ a b . b)
+→β a [b\a]
+→β b
