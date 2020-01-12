@@ -83,3 +83,8 @@ Nr. 7
 →β (λ a b . a) b (λ a b . b)
 →β a [b\a]
 →β b
+
+
+Nr.8
+
+In der zweiten Gleichung werden auf der linken Seite vier Variablen unterschieden, auf der rechten jedoch nur drei. Sie ist daher höchstwahrscheinlich inkorrekt.
