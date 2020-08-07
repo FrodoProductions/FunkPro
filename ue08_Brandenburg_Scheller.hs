@@ -55,7 +55,7 @@ elem.1 -> elem a ys = False || elem a ys
 IV: elem a (xs ++ ys) = elem a xs || elem a ys
 
 IS:   elem a ((x:xs) ++ ys) = elem a (x:xs) || elem a ys
-   -> elem a x:(xs ++ ys)
+   -> elem a x:(xs ++ ys) = elem a (x:xs) || elem a ys
    -> elem a [x] || elem a (xs ++ ys) = elem a [x] || elem a xs || elem a ys
 IV -> elem a [x] || elem a xs || elem a ys = elem a [x] || elem a xs || elem a ys
 
@@ -103,13 +103,27 @@ map.2 -> (f . g) x:map (f . g) xs = map f ((g x):map g xs)
 
 -}
 
+-- f)
+
+{-
+
+IA:        map f . concat [] = concat . map (map f) []
+foldr.1 -> map f . [] = concat . map (map f) []
+map.1   -> [] = concat . []
+foldr.1 -> [] = []
+
+IV: map f . concat xs = concat . map (map f) xs
+
+IS:   map f . concat (x:xs) = concat . map (map f) (x:xs)
+   -> map f . concat (x:xs) = concat . map
+
+-}
+
+
 -- AUFGABE 2
 
 {-
 
-IA: length (powerset []) = 2^(length [])
--> length [[]] = 2^0
--> 1 = 1
 
 IV: length (powerset xs) = 2^(length xs)
 
